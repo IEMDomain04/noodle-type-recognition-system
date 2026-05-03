@@ -8,6 +8,14 @@ The goal is to apply **SLC** (Simple, Lovable, Complete) approach to this web ap
 
 - Model and dataset sourced from [YunZhuHuang327/Noodle-Type-Recognition](https://github.com/YunZhuHuang327/Noodle-Type-Recognition).
 
+## How to run the system 
+
+.\.venv\Scripts\activate
+
+uvicorn backend.main:app --reload
+
+npm run dev for the other terminal
+
 ## Process Flow
 
 Below is the basic process flow of the NCS, following the SLC approach:
