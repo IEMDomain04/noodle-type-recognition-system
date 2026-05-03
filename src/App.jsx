@@ -36,24 +36,24 @@ export default function App() {
 
   const predictImage = async () => {
     if (!imageFile) return;
-    
+
     setLoading(true);
     setError(null);
     setPrediction(null);
-    
+
     const formData = new FormData();
     formData.append('file', imageFile);
-    
+
     try {
       const response = await fetch('http://localhost:8000/predict', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
-      
+
       const data = await response.json();
       setPrediction(data);
     } catch (err) {
@@ -83,7 +83,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center p-6 sm:p-12 font-sans">
       <div className="w-full max-w-3xl glass-panel rounded-3xl p-8 shadow-2xl relative overflow-hidden z-10">
-        
+
         <Header />
 
         {error && (
@@ -96,24 +96,24 @@ export default function App() {
         <div className="grid gap-8">
           <div className="flex flex-col items-center w-full">
             {cameraActive ? (
-              <CameraCapture 
-                onCapture={handleCameraCapture} 
-                onCancel={() => setCameraActive(false)} 
-                onError={setError} 
+              <CameraCapture
+                onCapture={handleCameraCapture}
+                onCancel={() => setCameraActive(false)}
+                onError={setError}
               />
             ) : imageSrc ? (
               <>
-                <ImageActionState 
-                  imageSrc={imageSrc} 
+                <ImageActionState
+                  imageSrc={imageSrc}
                   loading={loading}
                   onClassify={predictImage}
                   onSelectAnother={handleFileUpload}
                   onTakeAnother={openCamera}
                   hideActions={!!prediction && !loading}
                 />
-                
+
                 {prediction && !loading && (
-                  <PredictionResult 
+                  <PredictionResult
                     prediction={prediction}
                     onSelectAgain={handleFileUpload}
                     onTakeAgain={openCamera}
@@ -121,15 +121,15 @@ export default function App() {
                 )}
               </>
             ) : (
-              <UploadOptions 
-                onFileUpload={handleFileUpload} 
-                onCameraSelect={openCamera} 
+              <UploadOptions
+                onFileUpload={handleFileUpload}
+                onCameraSelect={openCamera}
               />
             )}
           </div>
         </div>
       </div>
-      
+
       {/* Decorative background elements */}
       <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] pointer-events-none" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
